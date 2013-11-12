@@ -1,29 +1,12 @@
-# heroku-twilio
+# node-twilio-autouri
 
-A fork of the Twilio node library that is Heroku friendly 
+A fork of the Twilio node library that implements automatic callback provisioning. Based on CEWendel's library https://github.com/CEWendel/heroku-twilio.
 
-## Installation
-
-Parts of node-twilio depend on [`express`](http://expressjs.com).
-
-To install via npm:
-    
-    npm install heroku-twilio
-
-To install by hand, download the module and create a symlink in `~/.node_libraries`
-
-    $ ln -s /path/to/node-twilio ~/.node-libraries/twilio
-
-Note: Previously, the npm package named `twilio` referred to 
-[Aaron Blohowiak's Twilio helper library](http://github.com/aaronblohowiak/Twilio-Node). 
-Due to Aaron's time constraints, he has let this package use the `twilio` name while he is
-unable to work on that implementation.
 
 ## Usage
 
 To start, you'll need to obtain a Twilio account. (http://twilio.com). This will give you a Twilio Account Sid and a Twilio Auth Key. Using these, you may start using node for complex, awesome telephony applications.
 
-To really get down to business, check out [`the documentation`](https://github.com/sjwalter/node-twilio/wiki).
 
 ### API
 
@@ -57,7 +40,7 @@ the hostname of the application server. (This is used to construct URIs to give 
         TwilioClient = require('twilio').Client,
         client = new TwilioClient(ACCOUNT_SID, AUTH_TOKEN, MY_HOSTNAME);
 
-Now that we have our client, let's get a PhoneNumber object using one of the 
+Now that we have our client, let's get a PhoneNumber object using one of the
 phone numbers that we've provisioned through some other channel.
 (Note: You can provision phone numbers very simply via the Low-Level REST API)
 The phone number used here can be any sort of Twilio number. If it's an outgoing
@@ -70,53 +53,52 @@ We'll now setup our phone number. This goes out and requests the phone number
 instance resource and fills in a data structure with this phone number's details.
 
     phone.setup(function() {
-        
+
         // Alright, our phone number is set up. Let's, say, make a call:
         phone.makeCall('+18674451795', null, function(call) {
-            
+
             // 'call' is an OutgoingCall object. This object is an event emitter.
             // It emits two events: 'answered' and 'ended'
             call.on('answered', function(reqParams, res) {
-                
+
                 // reqParams is the body of the request Twilio makes on call pickup.
                 // For instance, reqParams.CallSid, reqParams.CallStatus.
                 // See: http://www.twilio.com/docs/api/2010-04-01/twiml/twilio_request
                 // res is a Twiml.Response object. This object handles generating
                 // a compliant Twiml response.
-                
+
                 console.log('Call answered');
-    
+
                 // We'll append a single Say object to the response:
                 res.append(new Twiml.Say('Hello, there!'));
-    
+
                 // And now we'll send it.
                 res.send();
             });
-            
+
             call.on('ended', function(reqParams) {
                 console.log('Call ended');
             });
         });
-    
+
         // But wait! What if our number receives an incoming SMS?
         phone.on('incomingSms', function(reqParams, res) {
-            
+
             // As above, reqParams contains the Twilio request parameters.
             // Res is a Twiml.Response object.
-            
+
             console.log('Received incoming SMS with text: ' + reqParams.Body);
             console.log('From: ' + reqParams.From);
         });
-    
+
         // Oh, and what if we get an incoming call?
         phone.on('incomingCall', function(reqParams, res) {
-            
+
             res.append(new Twiml.Say('Thanks for calling! I think you are beautiful!'));
             res.send();
         });
     });
 
-To get going beyond the basics, check out [the documentation](https://github.com/sjwalter/node-twilio/wiki).
 
 #### Notes
 
@@ -144,5 +126,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 =======
-heroku-twilio
+node-twilio-autouri
 =============
