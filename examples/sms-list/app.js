@@ -1,12 +1,23 @@
 var TwilioClient = require('../../lib').Client,
     Twiml = require('../../lib/').Twiml,
     creds = require('./config').Credentials,
-    client = new TwilioClient(creds.sid, creds.authToken, creds.hostname),
     // Our numbers list. Add more numbers here and they'll get the message
     numbers = ['+18674451795'],
     message = 'WE DAMAGE WE',
     numToSend = numbers.length,
     numSent = 0;
+
+var client = new TwilioClient(creds.sid, creds.authToken, creds.hostname);
+
+/*
+// If using mubsub for load balanced servers or cluster processes
+
+var client = new TwilioClient(creds.sid, creds.authToken, creds.hostname, {
+    mubsub: {
+        url: "mongodb://localhost:27017/twilio"
+    }
+});
+*/
 
 var phone = client.getPhoneNumber(creds.outgoing);
 phone.setup(function() {

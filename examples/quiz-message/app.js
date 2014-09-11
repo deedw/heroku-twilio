@@ -1,16 +1,28 @@
 var TwilioClient = require('../../lib').Client,
     Twiml = require('../../lib').Twiml,
-    creds = require('./config').Credentials,
-    client = new TwilioClient(creds.sid, creds.authToken, creds.hostname),
-    questions = [
+    creds = require('./config').Credentials;
+
+var client = new TwilioClient(creds.sid, creds.authToken, creds.hostname);
+
+/*
+// If using mubsub for load balanced servers or cluster processes
+
+var client = new TwilioClient(creds.sid, creds.authToken, creds.hostname, {
+    mubsub: {
+        url: "mongodb://localhost:27017/twilio"
+    }
+});
+*/
+
+var questions = [
         {
-            q: 'The population of Canada is roughly:', 
+            q: 'The population of Canada is roughly:',
             correct: 2,
             answers: {
-                1: '3 million', 
+                1: '3 million',
                 2: '33 million',
-                3: '10 million', 
-                4: '20 million', 
+                3: '10 million',
+                4: '20 million',
                 5: '300 million'
             }
         },
@@ -62,7 +74,7 @@ phone.setup(function() {
             'winner\'s message with your own.'),
             q = choose(questions),
             playMessage = currentWinnerMessage ? new Twiml.Play(currentWinnerMessage) : null;
-        
+
         res.append(intro);
 
         if(!playMessage) {
@@ -71,7 +83,7 @@ phone.setup(function() {
             res.append(new Twiml.Say('The previous winner said.')).
                 append(playMessage);
         }
-        
+
         // Build the question text
         var questionText = 'Here is your question. ' + q.q + '. ',
             cur = 1;
@@ -93,9 +105,9 @@ phone.setup(function() {
                 resp.append(new Twiml.Say('That is correct! You are brilliant! ' +
                     'You may now record a message for the next participant. ' +
                     'Press pound when you are done recording.'));
-                
+
                 var rec = new Twiml.Record({maxLength: 10, finishOnKey: '#'});
-                
+
                 rec.on('recorded', function(reqParams, resp) {
                     // Save the uri
                     currentWinnerMessage = reqParams.RecordingUrl;

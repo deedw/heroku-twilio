@@ -1,19 +1,19 @@
 {
-    "name": "node-twilio-autouri",
-    "description": "A Twilio helper library for node that has automatic provisioning for callbacks",
-    "version": "0.0.6",
-    "author": "David Willis (http://github.com/deedw)",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/deedw/node-twilio-autouri.git"
-    },
-    "dependencies": {
-        "express": ">= 3.0.0"
-    },
-    "modules": {
-        "client": "./lib/twilio",
-        "twiml": "./lib/twiml"
-    },
-    "main": "./lib",
-    "engines": {"node" : ">=0.4.0"}
+  "name": "node-twilio-autouri",
+  "description": "A Twilio helper library for node that has automatic provisioning for callbacks",
+  "version": "0.1.0",
+  "author": "David Willis (http://github.com/deedw)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deedw/node-twilio-autouri.git"
+  },
+  "dependencies": {
+    "express": "3.x.x",
+    "mubsub": "^1.0.4",
+    "node-uuid": "^1.4.1"
+  },
+  "main": "./lib",
+  "engines": {
+    "node": ">=0.4.0"
+  }
 }
