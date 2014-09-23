@@ -1,7 +1,7 @@
 {
   "name": "node-twilio-autouri",
-  "description": "A Twilio helper library for node that has automatic provisioning for callbacks",
-  "version": "0.1.0",
+  "description": "A Twilio helper library for node with automatic provisioning for callbacks and optional multiple process support using mongo pubsub",
+  "version": "0.1.1",
   "author": "David Willis (http://github.com/deedw)",
   "repository": {
     "type": "git",
