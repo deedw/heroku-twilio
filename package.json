@@ -1,7 +1,7 @@
 {
   "name": "node-twilio-autouri",
   "description": "A Twilio helper library for node with automatic provisioning for callbacks and multiple process support using redis or mongo mubsub",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": "David Willis (http://github.com/deedw)",
   "repository": {
     "type": "git",
@@ -11,14 +11,14 @@
     "express": "3.x.x",
     "mubsub": "^1.0.4",
     "node-uuid": "^1.4.1",
-    "redis": "^0.12.1"
+    "redis": "^1.0.0"
   },
   "main": "./lib",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "devDependencies": {
-    "async": "^0.9.0",
-    "request": "^2.51.0"
+    "async": "^1.4.2",
+    "request": "^2.62.0"
   }
 }
