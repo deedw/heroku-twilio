@@ -8,7 +8,9 @@
     "url": "https://github.com/deedw/node-twilio-autouri.git"
   },
   "dependencies": {
-    "express": "3.x.x",
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
     "mubsub": "^1.0.4",
     "node-uuid": "^1.4.1",
     "redis": "^1.0.0"

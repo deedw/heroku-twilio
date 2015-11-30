@@ -1,4 +1,4 @@
-var Client = require('../lib/rest-client');
+var Client = require('../lib/rest-client'),
     credentials = require('./config').Credentials,
     errors = 0,
     passes = 0;
@@ -14,7 +14,7 @@ function ok(msg) {
 
 function error(msg) {
     debug('Error!: ' + msg);
-    error += 1;
+    errors += 1;
 }
 
 function t(test, expected, postTest) {
@@ -25,7 +25,7 @@ function t(test, expected, postTest) {
             var r = response[key],
                 e = expected[key];
             if(!r) {
-                error(test + ': Did not get expected response parameter: ' + 
+                error(test + ': Did not get expected response parameter: ' +
                       key + '. Full response: ' + JSON.stringify(response));
             } else if(!r.match(e)) {
                 error(test + ': Expected ' + key + ' => ' + e +
@@ -34,31 +34,31 @@ function t(test, expected, postTest) {
                 ok(test + ': Got expected response parameter: ' + key);
             }
         }
-        typeof postTest == 'function' && postTest(response);
+        if (typeof postTest == 'function') postTest(response);
     };
 }
 
 var c = new Client(credentials.sid, credentials.authToken, {hostname: credentials.hostname});
 
 //c.getAccountInfo(r('Get account credentials'));
-c.getAccountInfo(t('getAccountInfo', 
+c.getAccountInfo(t('getAccountInfo',
     {
         sid: /AC.*/,
         date_created: /.*/,
         date_updated: /.*/,
         friendly_name: /.*/,
-        status: /Active/,
+        status: /Active/i,
         auth_token: /.*/,
         uri: /.*/
     }
 ));
 
-c.updateAccountInfo({FriendlyName: 'sjwalter-nodejs'}, t('updateAccountInfo', 
+c.updateAccountInfo({FriendlyName: 'deedw-nodejs'}, t('updateAccountInfo',
     {
         sid: /AC.*/,
         date_created: /.*/,
         date_updated: /.*/,
-        friendly_name: /sjwalter-nodejs/,
+        friendly_name: /deedw-nodejs/,
         status: /Active/,
         auth_token: /.*/,
         uri: /.*/
@@ -118,7 +118,7 @@ c.getOutgoingCallerIdList(null, t('getOutgoingCallerIdList', {
 }, function(res) {
     if(res.outgoing_caller_ids && res.outgoing_caller_ids.length > 0) {
         var ocSid = res.outgoing_caller_ids[0].sid;
-        c.getOutgoingCallerId(ocSid, t('getOutgoingCallerId', 
+        c.getOutgoingCallerId(ocSid, t('getOutgoingCallerId',
             {
                 sid: ocSid,
                 date_created: /.*/,
@@ -129,10 +129,10 @@ c.getOutgoingCallerIdList(null, t('getOutgoingCallerIdList', {
                 uri: /.*/
             }
         ));
-        c.updateOutgoingCallerId(ocSid, {FriendlyName: 'sjwalter-nodejs-test'},
-            t('updateOutgoingCallerId', 
+        c.updateOutgoingCallerId(ocSid, {FriendlyName: 'deedw-nodejs-test'},
+            t('updateOutgoingCallerId',
                 {
-                    friendly_name: 'sjwalter-node-js-test'
+                    friendly_name: 'deedw-node-js-test'
                 }
             )
         );
@@ -154,10 +154,10 @@ c.getIncomingNumbers(null, t('getIncomingNumbers', {
                 account_sid: /AC.*/
             }
         ));
-        c.updateIncomingNumber(inSid, {FriendlyName: 'sjwalter-node-test'}, t(
+        c.updateIncomingNumber(inSid, {FriendlyName: 'deedw-node-test'}, t(
             'updateIncomingNumber',
             {
-                friendly_name: 'sjwalter-node-test'
+                friendly_name: 'deedw-node-test'
             }
         ));
     } else {
