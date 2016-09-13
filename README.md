@@ -2,6 +2,19 @@
 
 A fork of the Twilio node library that implements automatic callback provisioning. Based on CEWendel's library https://github.com/CEWendel/heroku-twilio.
 
+## Installation
+
+```
+npm install deedw/node-twilio-autouri --save
+```
+
+The library uses either Redis or MongoDB (using mubsub) to communicate between processes. The Redis client is installed as a
+module dependency, but if MongoDB is required you should add mubsub to your project:
+
+```
+npm install mubsub@^1.2.0 --save
+```
+
 
 ## Usage
 
