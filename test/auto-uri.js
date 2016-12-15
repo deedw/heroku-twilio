@@ -4,7 +4,7 @@
 var AutoUri = require('../lib/auto-uri').AutoUri,
     request = require('request'),
     async = require('async'),
-    uuidv4 = require('node-uuid').v4;
+    uuidv4 = require('uuid').v4;
 
 var hostname = "http://localhost";
 var port1 = 3301;
